@@ -1,0 +1,21 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Cor</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/cores">Cor</ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="formGroup" (ngSubmit)="save()">
+    <ion-item>
+      <ion-label position="floating">Nome</ion-label>
+      <ion-input clearInput type="text" formControlName="nome" name="nome"></ion-input>
+    </ion-item>
+
+    <ion-button type="submit" color="intense-red" expand="block" [disabled]="!formGroup.valid">
+      Salvar
+    </ion-button>
+  </form>
+</ion-content>

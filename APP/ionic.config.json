@@ -1,0 +1,7 @@
+{
+  "name": "Armor",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

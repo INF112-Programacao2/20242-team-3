@@ -1,0 +1,37 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Produto</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/modelos">Modelo</ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="formGroup" (ngSubmit)="save()">
+    <ion-item>
+      <ion-label position="floating">SKU</ion-label>
+      <ion-input clearInput type="text" formControlName="SKU" name="SKU"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Marca</ion-label>
+      <ion-select interface="popover" formControlName="idMarca" name="idMarca" label-placement="fixed"
+        placeholder="Selecione uma marca">
+        <ion-select-option *ngFor="let marca of marcas" [value]="marca.idMarca">{{marca.nome}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Modelo</ion-label>
+      <ion-select interface="popover" formControlName="idModelo" name="idModelo" label-placement="fixed"
+        placeholder="Selecione um modelo">
+        <ion-select-option *ngFor="let modelo of modelos" [value]="modelo.idModelo">{{marca.nome}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-button type="submit" color="intense-red" expand="block" [disabled]="!formGroup.valid">
+      Salvar
+    </ion-button>
+  </form>
+</ion-content>

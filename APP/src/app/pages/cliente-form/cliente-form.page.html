@@ -1,0 +1,77 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Cliente</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/funcionarios">Cliente</ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="formGroup" (ngSubmit)="save()">
+    <ion-item>
+      <ion-label position="floating">Nome</ion-label>
+      <ion-input clearInput type="text" formControlName="nome" name="nome"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Data de nascimento</ion-label>
+      <br>
+      <ion-datetime formControlName="nascimento" name="nascimento" presentation="date"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Telefone</ion-label>
+      <input type="text" formControlName="telefone" name="telefone" class="form-control border-0 shadow-none"
+        mask="(00) 00000-0000">
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">CPF</ion-label>
+      <input type="text" formControlName="cpf" name="cpf" class="form-control border-0 shadow-none">
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Idade</ion-label>
+      <ion-input clearInput type="number" formControlName="idade" name="idade"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Sexo</ion-label>
+      <ion-select interface="popover" formControlName="sexo" name="sexo" label-placement="fixed"
+        placeholder="Selecione uma opção">
+        <ion-select-option value="MASCULINO">Masculino</ion-select-option>
+        <ion-select-option value="FEMININO">Feminino</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Envergadura</ion-label>
+      <ion-input clearInput type="number" formControlName="envergadura" name="envergadura"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Peso</ion-label>
+      <ion-input clearInput type="number" formControlName="peso" name="peso"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Altura</ion-label>
+      <ion-input clearInput type="number" formControlName="altura" name="altura"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Tórax</ion-label>
+      <ion-input clearInput type="number" formControlName="torax" name="torax"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Cintura</ion-label>
+      <ion-input clearInput type="number" formControlName="cintura" name="cintura"></ion-input>
+    </ion-item>
+
+    <ion-button type="submit" color="intense-red" expand="block" [disabled]="!formGroup.valid">
+      Salvar
+    </ion-button>
+  </form>
+</ion-content>
