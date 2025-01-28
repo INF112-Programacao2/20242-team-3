@@ -1,7 +1,7 @@
 #include <string>
-#include "Pessoa.cpp" // Supondo que a classe Pessoa está em um arquivo separado
-#include "util/EncryptionUtil.cpp"
-#include "util/PasswordUtil.cpp"
+#include "Pessoa.cpp" 
+#include "EncryptionUtil.h"
+#include "PasswordUtil.h"
 
 class Funcionario : public Pessoa{
 private:
