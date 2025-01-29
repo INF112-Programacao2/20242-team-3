@@ -31,12 +31,16 @@ O código principal PARA TESTES irá, em ordem:
 
 Executar estando na pasta C++:
 
-> gcc -c sqlite/sqlite3.c -o sqlite3.o (pra compilar o código fonte do sqlite, não é a gente que faz esse código, só compila ele pra usar)
+> Executar somente uma vez na máquina:
 
-> g++ dao/criarDB.cpp sqlite3.o -o teste_sqlite (pra criar o banco de dados. Só executar uma vez na máquina - no seu caso, não precisa executar de novo)
+>> gcc -c sqlite/sqlite3.c -o sqlite3.o (pra compilar o código fonte do sqlite, não é a gente que faz esse código, só compila ele pra usar)
 
-> ./teste_sqlite
+>> g++ dao/criarDB.cpp sqlite3.o -o teste_sqlite (pra criar o banco de dados. Só executar uma vez na máquina - no seu caso, não precisa executar de novo)
 
-> g++ model/Produto.cpp model/Kimono.cpp dao/ProdutoDao.cpp dao/KimonoDao.cpp dao/testeDao.cpp -o app -lsqlite3 (compila a classe Cor, a CorDao e o arquivo de teste das classes Dao, e chama de "app")
+>> ./teste_sqlite (de fato cria o banco de dados)
 
->./app (executa o teste)
+> Executar sempre que quiser rodar o programa:
+
+>> g++ model/Produto.cpp model/Kimono.cpp controller/ProdutoController.cpp controller/KimonoController.cpp controller/MenuController.cpp dao/ProdutoDao.cpp dao/KimonoDao.cpp -o app -lsqlite3 (compila os arquivos necessários)
+
+>> ./app (executa o teste)
