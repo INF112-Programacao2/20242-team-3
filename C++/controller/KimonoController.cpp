@@ -1,6 +1,8 @@
 #include "KimonoController.h"
+#include <iomanip>
 
-void KimonoController::exibirMenu() {
+void KimonoController::exibirMenu()
+{
     std::cout << "\n1 - INSERIR KIMONO\n";
     std::cout << "2 - ATUALIZAR KIMONO\n";
     std::cout << "3 - LISTAR KIMONOS\n";
@@ -9,45 +11,49 @@ void KimonoController::exibirMenu() {
     std::cout << "Escolha uma opção: ";
 }
 
-void KimonoController::menu() {
+void KimonoController::menu()
+{
     int opcao;
     bool continuar = true;
 
-    while (continuar) {
+    while (continuar)
+    {
         exibirMenu();
         continuar = false;
         std::cin >> opcao;
 
-        switch (opcao) {
-            case 1:
-                std::cout << "Opção 1 selecionada: INSERIR Kimono.\n";
-                inserir();
-                break;
-            case 2:
-                std::cout << "Opção 2 selecionada: ATUALIZAR Kimono.\n";
-                atualizar();
-                break;
-            case 3:
-                std::cout << "Opção 3 selecionada: LISTAR KIMONOS.\n";
-                listarTodos();
-                break;
-            case 4:
-                std::cout << "Opção 4 selecionada: LISTAR KIMONO POR ID.\n";
-                listarPorId(); 
-                break;
-            case 5:
-                std::cout << "Opção 5 selecionada: DELETAR KIMONO.\n";
-                deletar(); 
-                break;
-            default:
-                std::cout << "Opção inválida. Por favor, tente novamente.\n";
-                continuar = true;
-                break;
+        switch (opcao)
+        {
+        case 1:
+            std::cout << "Opção 1 selecionada: INSERIR Kimono.\n";
+            inserir();
+            break;
+        case 2:
+            std::cout << "Opção 2 selecionada: ATUALIZAR Kimono.\n";
+            atualizar();
+            break;
+        case 3:
+            std::cout << "Opção 3 selecionada: LISTAR KIMONOS.\n";
+            listarTodos();
+            break;
+        case 4:
+            std::cout << "Opção 4 selecionada: LISTAR KIMONO POR ID.\n";
+            listarPorId();
+            break;
+        case 5:
+            std::cout << "Opção 5 selecionada: DELETAR KIMONO.\n";
+            deletar();
+            break;
+        default:
+            std::cout << "Opção inválida. Por favor, tente novamente.\n";
+            continuar = true;
+            break;
         }
     }
 }
 
-void KimonoController::inserir() {
+void KimonoController::inserir()
+{
     Kimono kimono;
 
     int intInput;
@@ -189,13 +195,15 @@ void KimonoController::inserir() {
     } while (doubleInput < 0 || doubleInput > 100);
     kimono.setEncolhimento(doubleInput);
 
-    do {
+    do 
+    {
         std::cout << "Forma (0-TRADICIONAL, 1-SLIM, 2-ULTRASLIM): ";
         std::cin >> intInput;
 
-        if (intInput < 0 || intInput > 2) {
+        if (intInput < 0 || intInput > 2)
+        {
             std::cout << "OPÇÃO INVÁLIDA.\n";
-        } 
+        }
 
     } while (intInput < 0 || intInput > 2);
 
@@ -205,29 +213,81 @@ void KimonoController::inserir() {
     std::cout << "Inserindo kimono.\n";
 
     KimonoDao kimonoDao("NovoBanco.db");
+    kimonoDao.insert(kimono);
 
     std::cout << "Kimono inserido com sucesso.\n";
 }
 
-void KimonoController::atualizar() {
+void KimonoController::atualizar()
+{
     std::cout << "Atualizando kimono.\n";
 }
 
-void KimonoController::listarTodos() {
+void KimonoController::listarTodos()
+{
     KimonoDao kimonoDao("NovoBanco.db");
     std::vector<Kimono> listKimono = kimonoDao.findAll();
 
-    for (const Kimono& kimono : listKimono) {
-        std::cout << kimono.getSKU() << "+" << kimono.getIdProduto() << "\n" ;  // Chama o método de exibição de informações
+    std::cout << std::left
+              << std::setw(15) << "ID Produto"
+              << std::setw(15) << "Marca"
+              << std::setw(15) << "Modelo"
+              << std::setw(15) << "SKU"
+              << std::setw(15) << "Faixa Etária"
+              << std::setw(15) << "Tamanho"
+              << std::setw(15) << "Sexo"
+              << std::setw(15) << "Cor"
+              << std::setw(15) << "Gramatura"
+              << std::setw(15) << "Encolhimento"
+              << std::setw(15) << "Forma" << std::endl;
+    std::cout << "----------------------------------------------------------------------------------------------------------------------------------------------" << std::endl;
+
+    for (Kimono &kimono : listKimono)
+    {
+        kimono.kimonoToString();
     }
 }
 
-void KimonoController::listarPorId() {
-    int idKimono = 0;
-    std::cout << "Listando o kimono com id: " << idKimono << "\n";
+void KimonoController::listarPorId()
+{
+    int idProduto;
+
+    std::cout << "Insira o id do seu kimono: ";
+    std::cin >> idProduto;
+
+    KimonoDao kimonoDao("NovoBanco.db");
+    Kimono kimono = kimonoDao.findById(idProduto);
+
+    std::cout << std::left
+              << std::setw(15) << "ID Produto"
+              << std::setw(15) << "Marca"
+              << std::setw(15) << "Modelo"
+              << std::setw(15) << "SKU"
+              << std::setw(15) << "Faixa Etária"
+              << std::setw(15) << "Tamanho"
+              << std::setw(15) << "Sexo"
+              << std::setw(15) << "Cor"
+              << std::setw(15) << "Gramatura"
+              << std::setw(15) << "Encolhimento"
+              << std::setw(15) << "Forma" << std::endl;
+    std::cout << "----------------------------------------------------------------------------------------------------------------------------------------------" << std::endl;
+
+    kimono.kimonoToString();
 }
 
-void KimonoController::deletar() {
-    int idKimono = 0;
-    std::cout << "Deletando o kimono com id: " << idKimono << "\n";
+void KimonoController::deletar()
+{
+    listarTodos();
+    int idProduto;
+
+    std::cout << "Insira o id do kimono a ser deletado: ";
+    std::cin >> idProduto;
+
+    KimonoDao kimonoDao("NovoBanco.db");
+    kimonoDao.deleteById(idProduto);
+
+    std::cout << "----------------------------------------------------------------------------------------------------------------------------------------------" << std::endl;
+
+    listarTodos();
+    std::cout << "\n\n EXCLUSÃO REALIZADA COM SUCESSO.";
 }

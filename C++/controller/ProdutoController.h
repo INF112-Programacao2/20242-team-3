@@ -2,12 +2,12 @@
 #define PRODUTO_CONTROLLER_H
 
 #include <iostream>
-// #include "BermudaController.h"
+#include "BermudaController.h"
 #include "KimonoController.h"
 
 class ProdutoController {
 private:
-    // BermudaController bermudaController;
+    BermudaController bermudaController;
     KimonoController kimonoController;
 
 public:

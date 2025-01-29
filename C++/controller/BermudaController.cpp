@@ -1,6 +1,8 @@
 #include "BermudaController.h"
+#include <iomanip>
 
-void BermudaController::exibirMenu() {
+void BermudaController::exibirMenu()
+{
     std::cout << "\n1 - INSERIR BERMUDA\n";
     std::cout << "2 - ATUALIZAR BERMUDA\n";
     std::cout << "3 - LISTAR BERMUDAS\n";
@@ -9,47 +11,49 @@ void BermudaController::exibirMenu() {
     std::cout << "Escolha uma opção: ";
 }
 
-void BermudaController::menu() {
+void BermudaController::menu()
+{
     int opcao;
     bool continuar = true;
 
-    while (continuar) {
+    while (continuar)
+    {
         exibirMenu();
         continuar = false;
         std::cin >> opcao;
 
-        switch (opcao) {
-            case 1:
-                std::cout << "Opção 1 selecionada: INSERIR BERMUDA.\n";
-                inserir();
-                break;
-            case 2:
-                std::cout << "Opção 2 selecionada: ATUALIZAR BERMUDA.\n";
-                atualizar();
-                break;
-            case 3:
-                std::cout << "Opção 3 selecionada: LISTAR BERMUDAS.\n";
-                listarTodos();
-                break;
-            case 4:
-                std::cout << "Opção 4 selecionada: LISTAR BERMUDA POR ID.\n";
-                listarPorId(); // Apenas um exemplo, ajustar lógica conforme necessário
-                break;
-            case 5:
-                std::cout << "Opção 5 selecionada: DELETAR BERMUDA.\n";
-                deletar(); // Apenas um exemplo, ajustar lógica conforme necessário
-                break;
-            default:
-                std::cout << "Opção inválida. Por favor, tente novamente.\n";
-                continuar = true;
-                break;
+        switch (opcao)
+        {
+        case 1:
+            std::cout << "Opção 1 selecionada: INSERIR Bermuda.\n";
+            inserir();
+            break;
+        case 2:
+            std::cout << "Opção 2 selecionada: ATUALIZAR Bermuda.\n";
+            atualizar();
+            break;
+        case 3:
+            std::cout << "Opção 3 selecionada: LISTAR BERMUDAS.\n";
+            listarTodos();
+            break;
+        case 4:
+            std::cout << "Opção 4 selecionada: LISTAR BERMUDA POR ID.\n";
+            listarPorId();
+            break;
+        case 5:
+            std::cout << "Opção 5 selecionada: DELETAR BERMUDA.\n";
+            deletar();
+            break;
+        default:
+            std::cout << "Opção inválida. Por favor, tente novamente.\n";
+            continuar = true;
+            break;
         }
     }
 }
 
-void BermudaController::inserir() {
-    std::cout << "Inserindo bermuda.\n";
-
+void BermudaController::inserir()
+{
     Bermuda bermuda;
 
     int intInput;
@@ -164,27 +168,33 @@ void BermudaController::inserir() {
     Cor cor = static_cast<Cor>(intInput);
     bermuda.setCor(cor);
 
-    do {
+    do 
+    {
         std::cout << "Ajuste (0-ELASTICO, 1-BOTAO, 2-AMARRACAO): ";
         std::cin >> intInput;
 
-        if (intInput < 0 || intInput > 2) {
+        if (intInput < 0 || intInput > 2)
+        {
             std::cout << "OPÇÃO INVÁLIDA.\n";
-        } 
+        }
 
     } while (intInput < 0 || intInput > 2);
+
     Ajuste ajuste = static_cast<Ajuste>(intInput);
     bermuda.setAjuste(ajuste);
 
-    do {
+    do 
+    {
         std::cout << "Comprimento (0-CURTO, 1-MEDIO, 2-LONGO): ";
         std::cin >> intInput;
 
-        if (intInput < 0 || intInput > 2) {
+        if (intInput < 0 || intInput > 2)
+        {
             std::cout << "OPÇÃO INVÁLIDA.\n";
-        } 
+        }
 
     } while (intInput < 0 || intInput > 2);
+
     Comprimento comprimento = static_cast<Comprimento>(intInput);
     bermuda.setComprimento(comprimento);
 
@@ -192,31 +202,77 @@ void BermudaController::inserir() {
 
     BermudaDao bermudaDao("NovoBanco.db");
 
-    std::cout << "Bermuda inserido com sucesso.\n";
+    std::cout << "Bermuda inserida com sucesso.\n";
 }
 
-
-void BermudaController::atualizar() {
+void BermudaController::atualizar()
+{
     std::cout << "Atualizando bermuda.\n";
 }
 
-void BermudaController::listarTodos() {
-    std::cout << "Listando todas as bermudas.\n";
-
+void BermudaController::listarTodos()
+{
     BermudaDao bermudaDao("NovoBanco.db");
     std::vector<Bermuda> listBermuda = bermudaDao.findAll();
 
-    for (const Bermuda& bermuda : listBermuda) {
-        std::cout << bermuda.getSKU() << "+" << bermuda.getIdProduto() << "\n" ;  // Chama o método de exibição de informações
+    std::cout << std::left
+              << std::setw(15) << "ID Produto"
+              << std::setw(15) << "Marca"
+              << std::setw(15) << "Modelo"
+              << std::setw(15) << "SKU"
+              << std::setw(15) << "Faixa Etária"
+              << std::setw(15) << "Tamanho"
+              << std::setw(15) << "Sexo"
+              << std::setw(15) << "Cor"
+              << std::setw(15) << "Ajuste"
+              << std::setw(15) << "Comprimento" << std::endl;
+    std::cout << "----------------------------------------------------------------------------------------------------------------------------------------------" << std::endl;
+
+    for (Bermuda &bermuda : listBermuda)
+    {
+        bermuda.bermudaToString();
     }
 }
 
-void BermudaController::listarPorId() {
-    int idBermuda = 0;
-    std::cout << "Listando a bermuda com id: " << idBermuda << "\n";
+void BermudaController::listarPorId()
+{
+    int idProduto;
+
+    std::cout << "Insira o id do seu bermuda: ";
+    std::cin >> idProduto;
+
+    BermudaDao bermudaDao("NovoBanco.db");
+    Bermuda bermuda = bermudaDao.findById(idProduto);
+
+    std::cout << std::left
+              << std::setw(15) << "ID Produto"
+              << std::setw(15) << "Marca"
+              << std::setw(15) << "Modelo"
+              << std::setw(15) << "SKU"
+              << std::setw(15) << "Faixa Etária"
+              << std::setw(15) << "Tamanho"
+              << std::setw(15) << "Sexo"
+              << std::setw(15) << "Cor"
+              << std::setw(15) << "Ajuste"
+              << std::setw(15) << "Comprimento" << std::endl;
+    std::cout << "----------------------------------------------------------------------------------------------------------------------------------------------" << std::endl;
+
+    bermuda.bermudaToString();
 }
 
-void BermudaController::deletar() {
-    int idBermuda = 0;
-    std::cout << "Deletando a bermuda com id: " << idBermuda << "\n";
+void BermudaController::deletar()
+{
+    listarTodos();
+    int idProduto;
+
+    std::cout << "Insira o id do bermuda a ser deletado: ";
+    std::cin >> idProduto;
+
+    BermudaDao bermudaDao("NovoBanco.db");
+    bermudaDao.deleteById(idProduto);
+
+    std::cout << "----------------------------------------------------------------------------------------------------------------------------------------------" << std::endl;
+
+    listarTodos();
+    std::cout << "\n\n EXCLUSÃO REALIZADA COM SUCESSO.";
 }

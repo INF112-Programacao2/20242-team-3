@@ -4,12 +4,12 @@
 
 int main() {
     try {
-        int id = 12;
+        int id = 13;
 
         KimonoDao kimonoDao("NovoBanco.db");
 
         // Inserir um novo kimono
-        Kimono kimono(id, Marca::DUBAI, Modelo::COMUM, "Kimono SKU12yyy", FaixaEtaria::ADULTO,
+        Kimono kimono(id, Marca::DUBAI, Modelo::COMUM, "Kimono SKU13", FaixaEtaria::ADULTO,
                       Tamanho::G, Sexo::FEMININO, Cor::AZUL, 20.5, 5, Forma::SLIM);
         kimonoDao.insert(kimono);
 

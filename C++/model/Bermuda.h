@@ -38,6 +38,11 @@ public:
 
     Comprimento getComprimento() const;
     void setComprimento(Comprimento value);
+
+    // Coversores para STRING
+    void bermudaToString();
+    std::string ajusteToString(Ajuste ajuste);
+    std::string comprimentoToString(Comprimento comprimento);
 };
 
 

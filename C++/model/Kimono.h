@@ -38,14 +38,8 @@ public:
     Forma getForma() const;
     void setForma(Forma value);
 
-    void toString();
+    void kimonoToString();
 
-    std::string marcaToString(Marca marca);
-    std::string modeloToString(Modelo modelo);
-    std::string tamanhoToString(Tamanho tamanho);
-    std::string sexoToString(Sexo sexo);
-    std::string corToString(Cor cor);
-    std::string faixaEtariaToString(FaixaEtaria faixa);
     std::string formaToString(Forma forma);
 };
 

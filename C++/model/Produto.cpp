@@ -38,3 +38,63 @@ void Produto::setSexo(Sexo value) { sexo = value; }
 
 Cor Produto::getCor() const { return cor; }
 void Produto::setCor(Cor value) { cor = value; }
+
+// Conversores de ENUM para STRING
+std::string Produto::marcaToString(Marca marca) {
+    switch (marca) {
+        case Marca::KVRA: return "KVRA";
+        case Marca::VOUK: return "VOUK";
+        case Marca::DUBAI: return "DUBAI";
+        case Marca::SUERTE: return "SUERTE";
+    }
+    return "Desconhecida";
+}
+
+std::string Produto::modeloToString(Modelo modelo) {
+    switch (modelo) {
+        case Modelo::COMUM: return "COMUM";
+        case Modelo::REFORÇADO: return "REFORÇADO";
+    }
+    return "Desconhecido";
+}
+
+std::string Produto::tamanhoToString(Tamanho tamanho) {
+    switch (tamanho) {
+        case Tamanho::P: return "P";
+        case Tamanho::M: return "M";
+        case Tamanho::G: return "G";
+        case Tamanho::GG: return "GG";
+        case Tamanho::XGG: return "XGG";
+    }
+    return "Desconhecido";
+}
+
+std::string Produto::sexoToString(Sexo sexo) {
+    switch (sexo) {
+        case Sexo::MASCULINO: return "MASCULINO";
+        case Sexo::FEMININO: return "FEMININO";
+        case Sexo::UNISSEX: return "UNISSEX";
+    }
+    return "Desconhecido";
+}
+
+std::string Produto::corToString(Cor cor) {
+    switch (cor) {
+        case Cor::PRETO: return "PRETO";
+        case Cor::BRANCO: return "BRANCO";
+        case Cor::AZUL: return "AZUL";
+        case Cor::ROSA: return "ROSA";
+        case Cor::CINZA: return "CINZA";
+        case Cor::VERDE: return "VERDE";
+    }
+    return "Desconhecido";
+}
+
+std::string Produto::faixaEtariaToString(FaixaEtaria faixa) {
+    switch (faixa) {
+        case FaixaEtaria::ADULTO: return "ADULTO";
+        case FaixaEtaria::INFANTIL: return "INFANTIL";
+        case FaixaEtaria::JUVENIL: return "JUVENIL";
+    }
+    return "Desconhecido";
+}

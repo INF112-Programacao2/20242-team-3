@@ -85,6 +85,14 @@ public:
 
     Cor getCor() const;
     void setCor(Cor value);
+
+    // Conversores de ENUM para STRING
+    std::string marcaToString(Marca marca);
+    std::string modeloToString(Modelo modelo);
+    std::string tamanhoToString(Tamanho tamanho);
+    std::string sexoToString(Sexo sexo);
+    std::string corToString(Cor cor);
+    std::string faixaEtariaToString(FaixaEtaria faixa);
 };
 
 #endif
