@@ -1,10 +1,10 @@
 #include "Bermuda.h"
 
 // Construtor com todos os atributos
-Bermuda::Bermuda(int idProduto, int idMarca, Marca* marca, int idModelo, Modelo* modelo, const std::string& SKU, 
-        FaixaEtaria faixaEtaria, int idTamanho, Tamanho* tamanho, Sexo sexo, int idCor, Cor* cor, 
-        Ajuste ajuste, Comprimento comprimento)
-    : Produto(idProduto, idMarca, marca, idModelo, modelo, SKU, faixaEtaria, idTamanho, tamanho, sexo, idCor, cor),
+Bermuda::Bermuda(int idProduto, Marca marca, Modelo modelo, const std::string& SKU, 
+            FaixaEtaria faixaEtaria, Tamanho tamanho, Sexo sexo, Cor cor, 
+            Ajuste ajuste, Comprimento comprimento)
+    : Produto(idProduto, marca, modelo, SKU, faixaEtaria, tamanho, sexo, cor),
         ajuste(ajuste), comprimento(comprimento) {}
 
 // Construtor com nenhum atributo (valores padrão)

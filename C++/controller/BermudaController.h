@@ -2,7 +2,9 @@
 #define BERMUDA_CONTROLLER_H
 
 #include <iostream>
+#include "../model/Bermuda.h"
 #include "GenericController.h"
+#include "../dao/BermudaDao.h"
 
 class BermudaController : public GenericController {
 public:

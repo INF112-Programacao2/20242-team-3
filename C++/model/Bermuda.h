@@ -25,8 +25,8 @@ private:
 
 public:
     // Construtor com todos os atributos
-    Bermuda(int idProduto, int idMarca, Marca* marca, int idModelo, Modelo* modelo, const std::string& SKU, 
-            FaixaEtaria faixaEtaria, int idTamanho, Tamanho* tamanho, Sexo sexo, int idCor, Cor* cor, 
+    Bermuda(int idProduto, Marca marca, Modelo modelo, const std::string& SKU, 
+            FaixaEtaria faixaEtaria, Tamanho tamanho, Sexo sexo, Cor cor, 
             Ajuste ajuste, Comprimento comprimento);
 
     // Construtor com nenhum atributo (valores padrão)

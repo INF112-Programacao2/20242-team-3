@@ -19,7 +19,7 @@ public:
     Kimono findById(int idKimono);
     std::vector<Kimono> findAll();
     void insert(Kimono& kimono);
-    void update(const Kimono& kimono);
+    void update(Kimono& kimono);
     void deleteById(int idKimono);
 };
 

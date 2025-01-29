@@ -22,7 +22,7 @@ void ProdutoController::menu() {
         switch (opcao) {
             case 1:
                 std::cout << "Opção 1 selecionada: BERMUDA.\n";
-                //bermudaController.menu();
+                // bermudaController.menu();
                 break;
             case 2:
                 std::cout << "Opção 2 selecionada: KIMONO.\n";

@@ -4,8 +4,11 @@
 #include <iostream>
 #include "../model/Kimono.h"
 #include "GenericController.h"
+#include "../dao/KimonoDao.h"
 
 class KimonoController : public GenericController {
+
+
 public:
     void exibirMenu() override;
     void menu() override;

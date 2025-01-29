@@ -2,16 +2,18 @@
 #define KIMONO_H
 
 #include <string>
-#include "Produto.h" 
+#include "Produto.h"
 
 // Enum para Forma
-enum class Forma {
+enum class Forma
+{
     TRADICIONAL,
     SLIM,
     ULTRASLIM
 };
 
-class Kimono : public Produto {
+class Kimono : public Produto
+{
 private:
     double gramaturaTecido;
     int encolhimento;
@@ -19,8 +21,8 @@ private:
 
 public:
     // Construtor com todos os atributos
-    Kimono(int idProduto, Marca marca, Modelo modelo, const std::string& SKU, 
-           FaixaEtaria faixaEtaria, Tamanho tamanho, Sexo sexo, Cor cor, 
+    Kimono(int idProduto, Marca marca, Modelo modelo, const std::string &SKU,
+           FaixaEtaria faixaEtaria, Tamanho tamanho, Sexo sexo, Cor cor,
            double gramaturaTecido, int encolhimento, Forma forma);
 
     // Construtor com valores padrão
@@ -35,6 +37,16 @@ public:
 
     Forma getForma() const;
     void setForma(Forma value);
+
+    void toString();
+
+    std::string marcaToString(Marca marca);
+    std::string modeloToString(Modelo modelo);
+    std::string tamanhoToString(Tamanho tamanho);
+    std::string sexoToString(Sexo sexo);
+    std::string corToString(Cor cor);
+    std::string faixaEtariaToString(FaixaEtaria faixa);
+    std::string formaToString(Forma forma);
 };
 
 #endif

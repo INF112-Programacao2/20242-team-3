@@ -47,9 +47,9 @@ Kimono KimonoDao::findById(int idKimono) {
     
     Kimono kimono;
     if (sqlite3_step(stmt) == SQLITE_ROW) {
-        double gramatura = sqlite3_column_double(stmt, 0);
-        int encolhimento = sqlite3_column_int(stmt, 1);
-        std::string formaStr = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2));
+        double gramatura = sqlite3_column_double(stmt, 1);
+        int encolhimento = sqlite3_column_int(stmt, 2);
+        std::string formaStr = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3));
 
         Forma forma;
         if (formaStr == "TRADICIONAL") forma = Forma::TRADICIONAL;
@@ -130,7 +130,14 @@ void KimonoDao::insert(Kimono& kimono) {
 }
 
 // Atualizar um Kimono existente
-void KimonoDao::update(const Kimono& kimono) {
+void KimonoDao::update(Kimono& kimono) {
+    // Inserindo o Produto primeiro
+    ProdutoDao produtoDao("NovoBanco.db");
+    Produto produtoInserido = produtoDao.update(kimono);
+
+    // Atualiza o ID do produto no objeto Kimono
+    kimono.setIdProduto(produtoInserido.getIdProduto());
+
     const char* sql = "UPDATE Kimono SET gramaturaTecido = ?, encolhimento = ?, forma = ? WHERE idKimono = ?;";
     sqlite3_stmt* stmt;
 

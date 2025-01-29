@@ -167,12 +167,12 @@ void KimonoController::inserir() {
         std::cout << "Gramatura do Tecido (g/m²): ";
         std::cin >> doubleInput;
 
-        if (doubleInput < 0)
+        if (doubleInput <= 0)
         {
             std::cout << "OPÇÃO INVÁLIDA.\n";
         }
 
-    } while (doubleInput < 0);
+    } while (doubleInput <= 0);
 
     kimono.setGramaturaTecido(doubleInput);
 
@@ -204,6 +204,8 @@ void KimonoController::inserir() {
 
     std::cout << "Inserindo kimono.\n";
 
+    KimonoDao kimonoDao("NovoBanco.db");
+
     std::cout << "Kimono inserido com sucesso.\n";
 }
 
@@ -212,7 +214,12 @@ void KimonoController::atualizar() {
 }
 
 void KimonoController::listarTodos() {
-    std::cout << "Listando todas os Kimonos.\n";
+    KimonoDao kimonoDao("NovoBanco.db");
+    std::vector<Kimono> listKimono = kimonoDao.findAll();
+
+    for (const Kimono& kimono : listKimono) {
+        std::cout << kimono.getSKU() << "+" << kimono.getIdProduto() << "\n" ;  // Chama o método de exibição de informações
+    }
 }
 
 void KimonoController::listarPorId() {
