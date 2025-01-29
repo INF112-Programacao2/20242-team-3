@@ -6,8 +6,8 @@ SQLITE_SRC = sqlite/sqlite3.c
 SQLITE_OBJ = sqlite3.o
 
 # Arquivos principais
-DB_NAME = BANCO.db
-CPP_FILES = model/Produto.cpp model/Cor.cpp model/Marca.cpp model/Modelo.cpp model/Tamanho.cpp dao/ProdutoDao.cpp dao/testeDao.cpp
+DB_NAME = NovoBanco.db
+CPP_FILES = model/Produto.cpp model/Kimono.cpp dao//ProdutoDao.cpp dao/KimonoDao.cpp dao/testeDao.cpp
 APP_NAME = app
 
 # Regras principais

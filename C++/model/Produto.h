@@ -2,10 +2,30 @@
 #define PRODUTO_H
 
 #include <string>
-#include "Marca.h"
-#include "Modelo.h"
-#include "Tamanho.h"
-#include "Cor.h"
+// #include "Marca.h"
+// #include "Modelo.h"
+// #include "Tamanho.h"
+// #include "Cor.h"
+
+// Definição de enum para Marca
+enum class Marca {
+   KVRA, VOUK, DUBAI, SUERTE
+};
+
+// Definição de enum para Modelo
+enum class Modelo {
+   COMUM, REFORÇADO
+};
+
+// Definição de enum para Tamanho
+enum class Tamanho {
+   P, M, G,GG, XGG
+};
+
+// Definição de enum para Cor
+enum class Cor {
+    PRETO, BRANCO, AZUL, ROSA, CINZA, VERDE
+};
 
 // Definição de enum para Sexo
 enum class Sexo {
@@ -24,23 +44,19 @@ enum class FaixaEtaria {
 class Produto {
 protected:
     int idProduto;
-    int idMarca;
-    Marca* marca;
-    int idModelo;
-    Modelo* modelo;
+    Marca marca;
+    Modelo modelo;
     std::string SKU;
     FaixaEtaria faixaEtaria;
-    int idTamanho;
-    Tamanho* tamanho;
+    Tamanho tamanho;
     Sexo sexo;
-    int idCor;
-    Cor* cor;
+    Cor cor;
 
 public:
     // Construtor com todos os atributos
-    Produto(int idProduto, int idMarca, Marca* marca, int idModelo, Modelo* modelo, 
-            const std::string& SKU, FaixaEtaria faixaEtaria, int idTamanho, Tamanho* tamanho, 
-            Sexo sexo, int idCor, Cor* cor);
+    Produto(int idProduto, Marca marca, Modelo modelo, 
+            const std::string& SKU, FaixaEtaria faixaEtaria, Tamanho tamanho, 
+            Sexo sexo, Cor cor);
 
     // Construtor com nenhum atributo (valores padrão)
     Produto();
@@ -49,17 +65,11 @@ public:
     int getIdProduto() const;
     void setIdProduto(int value);
 
-    int getIdMarca() const;
-    void setIdMarca(int value);
+    Marca getMarca() const;
+    void setMarca(Marca value);
 
-    Marca* getMarca() const;
-    void setMarca(Marca* value);
-
-    int getIdModelo() const;
-    void setIdModelo(int value);
-
-    Modelo* getModelo() const;
-    void setModelo(Modelo* value);
+    Modelo getModelo() const;
+    void setModelo(Modelo value);
 
     std::string getSKU() const;
     void setSKU(const std::string& value);
@@ -67,20 +77,14 @@ public:
     FaixaEtaria getFaixaEtaria() const;
     void setFaixaEtaria(FaixaEtaria value);
 
-    int getIdTamanho() const;
-    void setIdTamanho(int value);
-
-    Tamanho* getTamanho() const;
-    void setTamanho(Tamanho* value);
+    Tamanho getTamanho() const;
+    void setTamanho(Tamanho value);
 
     Sexo getSexo() const;
     void setSexo(Sexo value);
 
-    int getIdCor() const;
-    void setIdCor(int value);
-
-    Cor* getCor() const;
-    void setCor(Cor* value);
+    Cor getCor() const;
+    void setCor(Cor value);
 };
 
 #endif

@@ -1,73 +1,70 @@
-#include <crow.h>
-#include <vector>
-#include <string>
-#include <stdexcept>
-#include "BermudaService.h" // Inclua seu serviço de Bermuda
+#include "BermudaController.h"
 
-class BermudaController {
-private:
-    BermudaService bermudaService;
+void BermudaController::exibirMenu() {
+    std::cout << "\n1 - INSERIR BERMUDA\n";
+    std::cout << "2 - ATUALIZAR BERMUDA\n";
+    std::cout << "3 - LISTAR KIMONOS\n";
+    std::cout << "4 - LISTAR KIMONO POR ID\n";
+    std::cout << "5 - DELETAR KIMONO\n";
+    std::cout << "Escolha uma opção: ";
+}
 
-public:
-    BermudaController(BermudaService service) : bermudaService(service) {}
+void BermudaController::menu() {
+    int opcao;
+    bool continuar = true;
 
-    void setupRoutes(crow::SimpleApp& app) {
-        // Endpoint para obter todas as bermudas
-        CROW_ROUTE(app, "/armor/produtos/bermuda/").methods(crow::HTTPMethod::GET)([this]() {
-            auto bermudas = bermudaService.getAll();
-            return crow::response(200, crow::json::wvalue(bermudas));
-        });
+    while (continuar) {
+        exibirMenu();
+        continuar = false;
+        std::cin >> opcao;
 
-        // Endpoint para obter uma bermuda por ID
-        CROW_ROUTE(app, "/armor/produtos/bermuda/<int>").methods(crow::HTTPMethod::GET)([this](int idBermuda) {
-            auto bermuda = bermudaService.getById(idBermuda);
-            if (!bermuda.has_value()) {
-                return crow::response(404, "Bermuda not found");
-            }
-            return crow::response(200, crow::json::wvalue(bermuda.value()));
-        });
-
-        // Endpoint para criar uma nova bermuda
-        CROW_ROUTE(app, "/armor/produtos/bermuda/").methods(crow::HTTPMethod::POST)([this](const crow::request& req) {
-            try {
-                auto bermuda = crow::json::load(req.body);
-                bermudaService.insert(bermuda);
-                return crow::response(201, "Bermuda created successfully");
-            } catch (const std::exception& e) {
-                return crow::response(400, e.what());
-            }
-        });
-
-        // Endpoint para atualizar uma bermuda
-        CROW_ROUTE(app, "/armor/produtos/bermuda/").methods(crow::HTTPMethod::PUT)([this](const crow::request& req) {
-            try {
-                auto bermuda = crow::json::load(req.body);
-                bermudaService.update(bermuda);
-                return crow::response(200, "Bermuda updated successfully");
-            } catch (const std::exception& e) {
-                return crow::response(400, e.what());
-            }
-        });
-
-        // Endpoint para deletar uma bermuda
-        CROW_ROUTE(app, "/armor/produtos/bermuda/<int>").methods(crow::HTTPMethod::DELETE)([this](int idBermuda) {
-            auto bermuda = bermudaService.getById(idBermuda);
-            if (!bermuda.has_value()) {
-                return crow::response(404, "Bermuda not found");
-            }
-            bermudaService.deleteById(idBermuda);
-            return crow::response(200, "Bermuda deleted successfully");
-        });
+        switch (opcao) {
+            case 1:
+                std::cout << "Opção 1 selecionada: INSERIR BERMUDA.\n";
+                inserir();
+                break;
+            case 2:
+                std::cout << "Opção 2 selecionada: ATUALIZAR BERMUDA.\n";
+                atualizar();
+                break;
+            case 3:
+                std::cout << "Opção 3 selecionada: LISTAR KIMONOS.\n";
+                listarTodos();
+                break;
+            case 4:
+                std::cout << "Opção 4 selecionada: LISTAR KIMONO POR ID.\n";
+                listarPorId(); // Apenas um exemplo, ajustar lógica conforme necessário
+                break;
+            case 5:
+                std::cout << "Opção 5 selecionada: DELETAR KIMONO.\n";
+                deletar(); // Apenas um exemplo, ajustar lógica conforme necessário
+                break;
+            default:
+                std::cout << "Opção inválida. Por favor, tente novamente.\n";
+                continuar = true;
+                break;
+        }
     }
-};
+}
 
-int main() {
-    crow::SimpleApp app;
+void BermudaController::inserir() {
+    std::cout << "Inserindo bermuda.\n";
+}
 
-    BermudaService bermudaService; // Implementação do serviço
-    BermudaController controller(bermudaService);
-    controller.setupRoutes(app);
+void BermudaController::atualizar() {
+    std::cout << "Atualizando bermuda.\n";
+}
 
-    app.port(8080).multithreaded().run();
-    return 0;
+void BermudaController::listarTodos() {
+    std::cout << "Listando todas as bermudas.\n";
+}
+
+void BermudaController::listarPorId() {
+    int idBermuda = 0;
+    std::cout << "Listando a bermuda com id: " << idBermuda << "\n";
+}
+
+void BermudaController::deletar() {
+    int idBermuda = 0;
+    std::cout << "Deletando a bermuda com id: " << idBermuda << "\n";
 }

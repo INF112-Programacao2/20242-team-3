@@ -1,101 +1,83 @@
-// Includes como <vector>, <iostream> etc. já estão no ProdutoDao.h
-#include "ProdutoDao.h"
+// Includes como <vector>, <iostream> etc. já estão no KimonoDao.h
+#include <iostream>
+#include "KimonoDao.h"
 
 int main() {
     try {
         int id = 6;
 
-        ProdutoDao produtoDao("BANCO.db");
+        KimonoDao kimonoDao("NovoBanco.db");
 
-        // Inserir um novo produto
-        Produto produto(id, 3, nullptr, 3, nullptr, "String SKU6", FaixaEtaria::ADULTO, 3, nullptr, Sexo::FEMININO, 6, nullptr);
-        produtoDao.insert(produto);
+        // Inserir um novo kimono
+        Kimono kimono(id, Marca::DUBAI, Modelo::COMUM, "Kimono SKU6", FaixaEtaria::ADULTO,
+                      Tamanho::G, Sexo::FEMININO, Cor::AZUL, 20.5, 5, Forma::SLIM);
+        kimonoDao.insert(kimono);
 
-        // Buscar e exibir a produto pelo ID
-        Produto retrievedProduto = produtoDao.findById(id);
-        std::cout << "Exibindo o produto buscado pelo id:" << std::endl;
-        std::cout << "Produto ID: " << retrievedProduto.getIdProduto()
-                  << ", Marca ID: " << retrievedProduto.getIdMarca()
-                  << ", Modelo ID: " << retrievedProduto.getIdModelo()
-                  << ", SKU: " << retrievedProduto.getSKU()
-                  << ", Faixa etaria: " << produtoDao.faixaEtariaToString(retrievedProduto.getFaixaEtaria())
-                  << ", Tamanho ID: " << retrievedProduto.getIdTamanho()
-                  << ", Sexo: " << produtoDao.sexoToString(retrievedProduto.getSexo())
-                  << ", Cor ID: " << retrievedProduto.getIdCor() << std::endl;
+        // Buscar e exibir a kimono pelo ID
+        Kimono retrievedKimono = kimonoDao.findById(id);
+        std::cout << "Exibindo o kimono buscado pelo id:" << std::endl;
+        std::cout << "Kimono ID: " << retrievedKimono.getIdProduto()
+                  << ", Gramatura: " << retrievedKimono.getGramaturaTecido()
+                  << ", Encolhimento: " << retrievedKimono.getEncolhimento()
+                  << ", Forma: " << kimonoDao.formaToString(retrievedKimono.getForma()) << std::endl; 
 
-        // Atualizar a produto
-        retrievedProduto.setIdMarca(14);
-        retrievedProduto.setIdModelo(4);
-        retrievedProduto.setSKU("Novo SKU6");
-        retrievedProduto.setFaixaEtaria(FaixaEtaria::JUVENIL);
-        retrievedProduto.setIdTamanho(1);
-        retrievedProduto.setSexo(Sexo::MASCULINO);
-        retrievedProduto.setIdCor(2);
+        // Atualizar a kimono
+        retrievedKimono.setGramaturaTecido(55);
+        retrievedKimono.setEncolhimento(10);
+        retrievedKimono.setForma(Forma::TRADICIONAL);
 
-        produtoDao.update(retrievedProduto);
+        kimonoDao.update(retrievedKimono);
 
         // Buscar e exibir novamente
-        retrievedProduto = produtoDao.findById(id);
-        std::cout << "Exibindo a produto buscada pelo id:" << std::endl;
-        std::cout << "Produto ID: " << retrievedProduto.getIdProduto()
-                  << ", Marca ID: " << retrievedProduto.getIdMarca()
-                  << ", Modelo ID: " << retrievedProduto.getIdModelo()
-                  << ", SKU: " << retrievedProduto.getSKU()
-                  << ", Faixa etaria: " << produtoDao.faixaEtariaToString(retrievedProduto.getFaixaEtaria())
-                  << ", Tamanho ID: " << retrievedProduto.getIdTamanho()
-                  << ", Sexo: " << produtoDao.sexoToString(retrievedProduto.getSexo())
-                  << ", Cor ID: " << retrievedProduto.getIdCor() << std::endl;
+        retrievedKimono = kimonoDao.findById(id);
+        std::cout << "Exibindo o kimono buscada pelo id:" << std::endl;
+        std::cout << "Kimono ID: " << retrievedKimono.getIdProduto()
+                  << ", Gramatura: " << retrievedKimono.getGramaturaTecido()
+                  << ", Encolhimento: " << retrievedKimono.getEncolhimento()
+                  << ", Forma: " << kimonoDao.formaToString(retrievedKimono.getForma()) << std::endl;
 
-        // Buscar e exibir todas as produtos
-        std::vector<Produto> allProduto = produtoDao.findAll();
+        // Buscar e exibir todas as kimonos
+        std::vector<Kimono> allKimono = kimonoDao.findAll();
 
-        std::cout << "Exibindo todas as produtos:" << std::endl;
-        for(int i = 0; i < allProduto.size(); i++){
-            std::cout << "Produto ID: " << allProduto[i].getIdProduto()
-                  << ", Marca ID: " << allProduto[i].getIdMarca()
-                  << ", Modelo ID: " << allProduto[i].getIdModelo()
-                  << ", SKU: " << allProduto[i].getSKU()
-                  << ", Faixa etaria: " << produtoDao.faixaEtariaToString(allProduto[i].getFaixaEtaria())
-                  << ", Tamanho ID: " << allProduto[i].getIdTamanho()
-                  << ", Sexo: " << produtoDao.sexoToString(allProduto[i].getSexo())
-                  << ", Cor ID: " << allProduto[i].getIdCor() << std::endl;
+        std::cout << "Exibindo todas as kimonos:" << std::endl;
+        for(int i = 0; i < allKimono.size(); i++){
+            std::cout << "Kimono ID: " << allKimono[i].getIdProduto()
+                  << ", Gramatura: " << allKimono[i].getGramaturaTecido()
+                  << ", Encolhimento " << allKimono[i].getEncolhimento()
+                  << ", Forma: " << kimonoDao.formaToString(allKimono[i].getForma()) << std::endl;
         }
 
-        // Deletar a produto
-        produtoDao.deleteById(id);
-        std::cout << "Produto deletada." << std::endl;
+        // // Deletar a kimono
+        // // kimonoDao.deleteById(id);
+        // // std::cout << "Kimono deletado." << std::endl;
 
-        // Buscar e exibir todas as produtos
-        std::vector<Produto> allProduto2 = produtoDao.findAll();
+        // Buscar e exibir todas as kimonos
+        std::vector<Kimono> allKimono2 = kimonoDao.findAll();
 
-        std::cout << "Exibindo todas as produtos:" << std::endl;
-        for(int i = 0; i < allProduto2.size(); i++){
-            std::cout << "Produto ID: " << allProduto2[i].getIdProduto()
-                  << ", Marca ID: " << allProduto2[i].getIdMarca()
-                  << ", Modelo ID: " << allProduto2[i].getIdModelo()
-                  << ", SKU: " << allProduto2[i].getSKU()
-                  << ", Faixa etaria: " << produtoDao.faixaEtariaToString(allProduto2[i].getFaixaEtaria())
-                  << ", Tamanho ID: " << allProduto2[i].getIdTamanho()
-                  << ", Sexo: " << produtoDao.sexoToString(allProduto2[i].getSexo())
-                  << ", Cor ID: " << allProduto2[i].getIdCor() << std::endl;
+        std::cout << "Exibindo todas as kimonos:" << std::endl;
+        for(int i = 0; i < allKimono2.size(); i++){
+            std::cout << "Kimono ID: " << allKimono2[i].getIdProduto()
+                  << ", Gramatura: " << allKimono2[i].getGramaturaTecido()
+                  << ", Encolhimento " << allKimono2[i].getEncolhimento()
+                  << ", Forma: " << kimonoDao.formaToString(allKimono2[i].getForma()) << std::endl;
         }
 
         // Buscar pelo SKU
-        Produto produtoBySKU = produtoDao.findBySKU("Novo SKU3");
-        std::cout << "Exibindo a produto buscada pelo SKU:" << std::endl;
-        std::cout << "Produto ID: " << produtoBySKU.getIdProduto()
-                  << ", Marca ID: " << produtoBySKU.getIdMarca()
-                  << ", Modelo ID: " << produtoBySKU.getIdModelo()
-                  << ", SKU: " << produtoBySKU.getSKU()
-                  << ", Faixa etaria: " << produtoDao.faixaEtariaToString(produtoBySKU.getFaixaEtaria())
-                  << ", Tamanho ID: " << produtoBySKU.getIdTamanho()
-                  << ", Sexo: " << produtoDao.sexoToString(produtoBySKU.getSexo())
-                  << ", Cor ID: " << produtoBySKU.getIdCor() << std::endl;
+        // Kimono kimonoBySKU = kimonoDao.findBySKU("Novo SKU3");
+        // std::cout << "Exibindo a kimono buscada pelo SKU:" << std::endl;
+        // std::cout << "Kimono ID: " << kimonoBySKU.getIdKimono()
+        //           << ", Marca ID: " << kimonoBySKU.getIdMarca()
+        //           << ", Modelo ID: " << kimonoBySKU.getIdModelo()
+        //           << ", SKU: " << kimonoBySKU.getSKU()
+        //           << ", Faixa etaria: " << kimonoDao.faixaEtariaToString(kimonoBySKU.getFaixaEtaria())
+        //           << ", Tamanho ID: " << kimonoBySKU.getIdTamanho()
+        //           << ", Sexo: " << kimonoDao.sexoToString(kimonoBySKU.getSexo())
+        //           << ", Cor ID: " << kimonoBySKU.getIdCor() << std::endl;
 
-        // Buscar como Tipo de Produto Tem que fazer dos outros Produtos ainda
+        // Buscar como Tipo de Kimono Tem que fazer dos outros Kimonos ainda
         // try {
-        //     std::string tipo = produtoDao.searchTipoProduto(1); // Exemplo de ID
-        //     std::cout << "Tipo do Produto: " << tipo << std::endl;
+        //     std::string tipo = produtoDao.searchTipoKimono(1); // Exemplo de ID
+        //     std::cout << "Tipo do Kimono: " << tipo << std::endl;
         // } catch (const std::exception& e) {
         //     std::cerr << "Erro: " << e.what() << std::endl;
         // }

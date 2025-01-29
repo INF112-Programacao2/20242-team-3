@@ -18,11 +18,21 @@ public:
     // Destrutor para fechar o banco
     ~ProdutoDao();
 
-    // Conversores de tipos
-    Sexo stringToSexo(const std::string& sexoStr);
+    // Conversores de ENUMS para STRING
     std::string sexoToString(const Sexo& sexo);
-    FaixaEtaria stringToFaixaEtaria(const std::string& faixaEtariaStr);
     std::string faixaEtariaToString(const FaixaEtaria& faixaEtaria);
+    std::string marcaToString(Marca marca);
+    std::string modeloToString(Modelo modelo);
+    std::string tamanhoToString(Tamanho tamanho);
+    std::string corToString(Cor cor);
+
+    // Conversores de STRING para ENUMS
+    Sexo stringToSexo(const std::string& sexoStr);
+    FaixaEtaria stringToFaixaEtaria(const std::string& faixaEtariaStr);
+    Marca stringToMarca(const std::string& marcaStr);
+    Modelo stringToModelo(const std::string& modeloStr);
+    Tamanho stringToTamanho(const std::string& tamanhoStr);
+    Cor stringToCor(const std::string& corStr);
 
     Produto findById(int idProduto);
     std::vector<Produto> findAll();
