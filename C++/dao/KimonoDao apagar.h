@@ -3,7 +3,6 @@
 
 #include <sqlite3.h>
 #include <vector>
-#include "ProdutoDao.h"
 #include "../model/Kimono.h"
 
 class KimonoDao {

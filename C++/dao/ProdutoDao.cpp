@@ -152,9 +152,13 @@ Produto ProdutoDao::findById(int idProduto) {
         // Converter modelo para o enum Modelo
         std::string modeloStr(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2)));
         produto.setModelo(stringToModelo(modeloStr)); // modelo
+
         
+
         produto.setSKU(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3))); // SKU
-        
+        std::cout << produto.getSKU() << "----------------------------------------------\n";    
+
+
         // Converter faixaEtaria para o enum FaixaEtaria
         std::string faixaEtariaStr(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 4)));
         produto.setFaixaEtaria(stringToFaixaEtaria(faixaEtariaStr)); // faixaEtaria

@@ -1,4 +1,5 @@
 #include "KimonoDao.h"
+#include "ProdutoDao.h"
 #include <stdexcept>
 #include <iostream>
 
@@ -32,34 +33,20 @@ Forma KimonoDao::stringToForma(const std::string& formaStr) {
     throw std::runtime_error("Forma inválida.");
 }
 
+
 // Buscar um Kimono pelo ID
 Kimono KimonoDao::findById(int idKimono) {
     const char* sql = "SELECT * FROM Kimono WHERE idKimono = ?;";
     sqlite3_stmt* stmt;
-
+    
     if (sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr) != SQLITE_OK) {
         throw std::runtime_error("Erro ao preparar a consulta SQL.");
     }
 
     sqlite3_bind_int(stmt, 1, idKimono);
-
+    
     Kimono kimono;
     if (sqlite3_step(stmt) == SQLITE_ROW) {
-        // Buscar o Produto correspondente
-        ProdutoDao produtoDao("NovoBanco.db");
-        Produto produto = produtoDao.findById(idKimono);
-
-        // Copiar os valores do Produto para o Kimono
-        kimono.setIdProduto(produto.getIdProduto());
-        kimono.setMarca(produto.getMarca());
-        kimono.setModelo(produto.getModelo());
-        kimono.setSKU(produto.getSKU());
-        kimono.setFaixaEtaria(produto.getFaixaEtaria());
-        kimono.setTamanho(produto.getTamanho());
-        kimono.setSexo(produto.getSexo());
-        kimono.setCor(produto.getCor());
-
-        // Preencher os atributos específicos do Kimono
         double gramatura = sqlite3_column_double(stmt, 1);
         int encolhimento = sqlite3_column_int(stmt, 2);
         std::string formaStr = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3));
@@ -72,12 +59,12 @@ Kimono KimonoDao::findById(int idKimono) {
         kimono.setGramaturaTecido(gramatura);
         kimono.setEncolhimento(encolhimento);
         kimono.setForma(forma);
+        kimono.setIdProduto(idKimono);
     }
 
     sqlite3_finalize(stmt);
     return kimono;
 }
-
 
 // Buscar todos os Kimonos
 std::vector<Kimono> KimonoDao::findAll() {
@@ -88,8 +75,6 @@ std::vector<Kimono> KimonoDao::findAll() {
     if (sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr) != SQLITE_OK) {
         throw std::runtime_error("Erro ao preparar a consulta SQL.");
     }
-
-    ProdutoDao produtoDao("NovoBanco.db");
 
     while (sqlite3_step(stmt) == SQLITE_ROW) {
         int idKimono = sqlite3_column_int(stmt, 0);
@@ -102,23 +87,11 @@ std::vector<Kimono> KimonoDao::findAll() {
         else if (formaStr == "SLIM") forma = Forma::SLIM;
         else if (formaStr == "ULTRASLIM") forma = Forma::ULTRASLIM;
 
-        // Buscar os dados da tabela Produto
-        Produto produto = produtoDao.findById(idKimono);
-
-        // Criar um objeto Kimono preenchido corretamente
-        Kimono kimono(
-            produto.getIdProduto(),
-            produto.getMarca(),
-            produto.getModelo(),
-            produto.getSKU(),
-            produto.getFaixaEtaria(),
-            produto.getTamanho(),
-            produto.getSexo(),
-            produto.getCor(),
-            gramatura,
-            encolhimento,
-            forma
-        );
+        Kimono kimono;
+        kimono.setIdProduto(idKimono);
+        kimono.setGramaturaTecido(gramatura);
+        kimono.setEncolhimento(encolhimento);
+        kimono.setForma(forma);
 
         kimonos.push_back(kimono);
     }
@@ -135,7 +108,6 @@ void KimonoDao::insert(Kimono& kimono) {
 
     // Atualiza o ID do produto no objeto Kimono
     kimono.setIdProduto(produtoInserido.getIdProduto());
-    
 
     const char* sql = "INSERT INTO Kimono (idKimono, gramaturaTecido, encolhimento, forma) VALUES (?, ?, ?, ?);";
     sqlite3_stmt* stmt;

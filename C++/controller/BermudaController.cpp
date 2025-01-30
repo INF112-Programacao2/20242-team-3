@@ -63,7 +63,7 @@ void BermudaController::inserir()
     do
     {
         std::cout << "SKU: ";
-        std::getline(std::cin, SKU);
+        std::cin >> SKU;
 
         if (SKU.empty())
         {
@@ -168,7 +168,7 @@ void BermudaController::inserir()
     Cor cor = static_cast<Cor>(intInput);
     bermuda.setCor(cor);
 
-    do 
+    do
     {
         std::cout << "Ajuste (0-ELASTICO, 1-BOTAO, 2-AMARRACAO): ";
         std::cin >> intInput;
@@ -183,7 +183,7 @@ void BermudaController::inserir()
     Ajuste ajuste = static_cast<Ajuste>(intInput);
     bermuda.setAjuste(ajuste);
 
-    do 
+    do
     {
         std::cout << "Comprimento (0-CURTO, 1-MEDIO, 2-LONGO): ";
         std::cin >> intInput;
@@ -201,6 +201,7 @@ void BermudaController::inserir()
     std::cout << "Inserindo bermuda.\n";
 
     BermudaDao bermudaDao("NovoBanco.db");
+    bermudaDao.insert(bermuda);
 
     std::cout << "Bermuda inserida com sucesso.\n";
 }

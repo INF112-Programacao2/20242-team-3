@@ -54,42 +54,27 @@ Comprimento BermudaDao::stringToComprimento(const std::string& comprimentoStr) {
 Bermuda BermudaDao::findById(int idBermuda) {
     const char* sql = "SELECT * FROM Bermuda WHERE idBermuda = ?;";
     sqlite3_stmt* stmt;
-
+    
     if (sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr) != SQLITE_OK) {
         throw std::runtime_error("Erro ao preparar a consulta SQL.");
     }
 
     sqlite3_bind_int(stmt, 1, idBermuda);
-
+    
     Bermuda bermuda;
     if (sqlite3_step(stmt) == SQLITE_ROW) {
-        // Buscar o Produto correspondente
-        ProdutoDao produtoDao("NovoBanco.db");
-        Produto produto = produtoDao.findById(idBermuda);
-
-        // Copiar os valores do Produto para o Bermuda
-        bermuda.setIdProduto(produto.getIdProduto());
-        bermuda.setMarca(produto.getMarca());
-        bermuda.setModelo(produto.getModelo());
-        bermuda.setSKU(produto.getSKU());
-        bermuda.setFaixaEtaria(produto.getFaixaEtaria());
-        bermuda.setTamanho(produto.getTamanho());
-        bermuda.setSexo(produto.getSexo());
-        bermuda.setCor(produto.getCor());
-
-        // Preencher os atributos específicos do Bermuda
         Ajuste ajuste = stringToAjuste(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)));
         Comprimento comprimento = stringToComprimento(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2)));
 
         bermuda.setAjuste(ajuste);
         bermuda.setComprimento(comprimento);
+        bermuda.setIdProduto(idBermuda);
     }
 
     sqlite3_finalize(stmt);
     return bermuda;
 }
 
-// Buscar todos os Bermudas
 // Buscar todos os Bermudas
 std::vector<Bermuda> BermudaDao::findAll() {
     std::vector<Bermuda> bermudas;
@@ -100,29 +85,15 @@ std::vector<Bermuda> BermudaDao::findAll() {
         throw std::runtime_error("Erro ao preparar a consulta SQL.");
     }
 
-    ProdutoDao produtoDao("NovoBanco.db");
-
     while (sqlite3_step(stmt) == SQLITE_ROW) {
         int idBermuda = sqlite3_column_int(stmt, 0);
         Ajuste ajuste = stringToAjuste(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1)));
         Comprimento comprimento = stringToComprimento(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2)));
 
-        // Buscar os dados da tabela Produto
-        Produto produto = produtoDao.findById(idBermuda);
-
-        // Criar um objeto Bermuda preenchido corretamente
-        Bermuda bermuda(
-            produto.getIdProduto(),
-            produto.getMarca(),
-            produto.getModelo(),
-            produto.getSKU(),
-            produto.getFaixaEtaria(),
-            produto.getTamanho(),
-            produto.getSexo(),
-            produto.getCor(),
-            ajuste,
-            comprimento
-        );
+        Bermuda bermuda;
+        bermuda.setIdProduto(idBermuda);
+        bermuda.setAjuste(ajuste); 
+        bermuda.setComprimento(comprimento);
 
         bermudas.push_back(bermuda);
     }
@@ -140,7 +111,6 @@ void BermudaDao::insert(Bermuda& bermuda) {
     // Atualiza o ID do produto no objeto Bermuda
     bermuda.setIdProduto(produtoInserido.getIdProduto());
     
-
     const char* sql = "INSERT INTO Bermuda (idBermuda, ajuste, comprimento) VALUES (?, ?, ?);";
     sqlite3_stmt* stmt;
 
@@ -148,18 +118,11 @@ void BermudaDao::insert(Bermuda& bermuda) {
         throw std::runtime_error("Erro ao preparar a inserção SQL.");
     }
 
-    std::string ajusteStr = ajusteToString(bermuda.getAjuste());
-    std::string comprimentoStr = comprimentoToString(bermuda.getComprimento());
-
-    //std::cout << "Ajuste: " << ajusteStr << " | Comprimento: " << comprimentoStr << std::endl;
-
-
     sqlite3_bind_int(stmt, 1, bermuda.getIdProduto());
-    sqlite3_bind_text(stmt, 2, ajusteStr.c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 3, comprimentoStr.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 2, ajusteToString(bermuda.getAjuste()).c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 3, comprimentoToString(bermuda.getComprimento()).c_str(), -1, SQLITE_STATIC);
 
     if (sqlite3_step(stmt) != SQLITE_DONE) {
-        std::cerr << "Erro ao inserir Bermuda: " << sqlite3_errmsg(db) << std::endl;
         throw std::runtime_error("Erro ao inserir Bermuda no banco.");
     }
 
@@ -187,7 +150,6 @@ void BermudaDao::update(Bermuda& bermuda) {
     sqlite3_bind_int(stmt, 3, bermuda.getIdProduto());
 
     if (sqlite3_step(stmt) != SQLITE_DONE) {
-        std::cerr << "Erro ao inserir Bermuda: " << sqlite3_errmsg(db) << std::endl;
         throw std::runtime_error("Erro ao atualizar Bermuda no banco.");
     }
 

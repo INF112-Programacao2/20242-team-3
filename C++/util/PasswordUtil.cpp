@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <bcrypt.h>  // Certifique-se de ter a biblioteca bcrypt instalada
+#include <bcrypt.h>  
 
 class PasswordUtil {
 public:

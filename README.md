@@ -31,16 +31,22 @@ O código principal PARA TESTES irá, em ordem:
 
 Executar estando na pasta C++:
 
-> Executar somente uma vez na máquina:
+>> Executar somente uma vez na máquina:
 
->> gcc -c sqlite/sqlite3.c -o sqlite3.o (pra compilar o código fonte do sqlite, não é a gente que faz esse código, só compila ele pra usar)
+> sudo apt update
 
->> g++ dao/criarDB.cpp sqlite3.o -o teste_sqlite (pra criar o banco de dados. Só executar uma vez na máquina - no seu caso, não precisa executar de novo)
+> sudo apt install libsqlite3-dev (instalar a biblioteca do sqlite)
 
->> ./teste_sqlite (de fato cria o banco de dados)
+> apt install sqlite
 
-> Executar sempre que quiser rodar o programa:
+> gcc -c sqlite/sqlite3.c -o sqlite3.o (pra compilar o código fonte do sqlite, não é a gente que faz esse código, só compila ele pra usar)
 
->> g++ model/Produto.cpp model/Kimono.cpp controller/ProdutoController.cpp controller/KimonoController.cpp controller/MenuController.cpp dao/ProdutoDao.cpp dao/KimonoDao.cpp -o app -lsqlite3 (compila os arquivos necessários)
+> g++ dao/criarDB.cpp sqlite3.o -o teste_sqlite (pra criar o banco de dados. Só executar uma vez na máquina - no seu caso, não precisa executar de novo)
 
->> ./app (executa o teste)
+> ./teste_sqlite (de fato cria o banco de dados)
+
+>> Executar sempre que quiser rodar o programa:
+
+> g++ model/Produto.cpp model/Bermuda.cpp model/Kimono.cpp controller/BermudaController.cpp controller/KimonoController.cpp controller/MenuController.cpp dao/ProdutoDao.cpp dao/BermudaDao.cpp dao/KimonoDao.cpp -o app -lsqlite3 (compila os arquivos necessários)
+
+> ./app (executa o teste)

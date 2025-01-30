@@ -1,43 +1,27 @@
-# Variáveis
-CXX = g++
-CFLAGS = -c
-LDFLAGS = -lsqlite3
-SQLITE_SRC = sqlite/sqlite3.c
-SQLITE_OBJ = sqlite3.o
+CC = g++
+SRC = \
+    model/Produto.cpp \
+    model/Bermuda.cpp \
+    model/Kimono.cpp \
+    controller/BermudaController.cpp \
+    controller/KimonoController.cpp \
+    controller/MenuController.cpp \
+    controller/LoginController.cpp \
+    dao/ProdutoDao.cpp \
+    dao/BermudaDao.cpp \
+    dao/KimonoDao.cpp \
+    main/main.cpp
 
-# Arquivos principais
-DB_NAME = NovoBanco.db
-CPP_FILES = model/Produto.cpp model/Kimono.cpp dao//ProdutoDao.cpp dao/KimonoDao.cpp dao/testeDao.cpp
-APP_NAME = app
+TARGET = app
+LIBS = -lsqlite3
 
-# Regras principais
-test: sqlite $(DB_NAME) $(APP_NAME) run
+all: build run
 
-sqlite:
-	@if [ ! -f $(SQLITE_OBJ) ]; then \
-		gcc $(CFLAGS) $(SQLITE_SRC) -o $(SQLITE_OBJ); \
-		echo "SQLite compilado com sucesso."; \
-	else \
-		echo "SQLite já compilado."; \
-	fi
-
-$(DB_NAME): dao/criarDB.cpp sqlite
-	@if [ ! -f $(DB_NAME) ]; then \
-		$(CXX) dao/criarDB.cpp $(SQLITE_OBJ) -o criarDB -lsqlite3; \
-		./criarDB; \
-		echo "Banco de dados criado com sucesso."; \
-	else \
-		echo "Banco de dados já existente."; \
-	fi
-
-$(APP_NAME): $(CPP_FILES) $(SQLITE_OBJ)
-	@$(CXX) $(CPP_FILES) $(SQLITE_OBJ) -o $(APP_NAME) $(LDFLAGS)
-	@echo "Aplicativo $(APP_NAME) compilado com sucesso."
+build:
+	$(CC) $(SRC) -o $(TARGET) $(LIBS)
 
 run:
-	@./$(APP_NAME)
-	@echo "Teste executado com sucesso."
+	./$(TARGET)
 
 clean:
-	@rm -f $(APP_NAME) $(SQLITE_OBJ) criarDB $(DB_NAME)
-	@echo "Arquivos de compilação removidos."
+	rm -f $(TARGET)

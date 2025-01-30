@@ -1,8 +1,7 @@
 #include "KimonoController.h"
 #include <iomanip>
 
-void KimonoController::exibirMenu()
-{
+void KimonoController::exibirMenu(){
     std::cout << "\n1 - INSERIR KIMONO\n";
     std::cout << "2 - ATUALIZAR KIMONO\n";
     std::cout << "3 - LISTAR KIMONOS\n";
@@ -63,7 +62,7 @@ void KimonoController::inserir()
     do
     {
         std::cout << "SKU: ";
-        std::getline(std::cin, SKU);
+        std::cin >> SKU;
 
         if (SKU.empty())
         {
