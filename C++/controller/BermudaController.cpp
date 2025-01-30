@@ -239,7 +239,7 @@ void BermudaController::listarPorId()
 {
     int idProduto;
 
-    std::cout << "Insira o id do seu bermuda: ";
+    std::cout << "Insira o id da sua bermuda: ";
     std::cin >> idProduto;
 
     BermudaDao bermudaDao("NovoBanco.db");
@@ -266,7 +266,7 @@ void BermudaController::deletar()
     listarTodos();
     int idProduto;
 
-    std::cout << "Insira o id do bermuda a ser deletado: ";
+    std::cout << "Insira o id da bermuda a ser deletada: ";
     std::cin >> idProduto;
 
     BermudaDao bermudaDao("NovoBanco.db");

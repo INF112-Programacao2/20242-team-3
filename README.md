@@ -8,6 +8,15 @@ Leonardo Peçanha Scala 116217
 
 Sistema de gerenciamento de estoque para empresas fornecedoras de roupas esportivas.
 
+# Sobre o sistema
+
+Através dele, é possível gerenciar o estoque de tipos diferentes de Produtos, como Bermudas e Kimonos. Os comandos são inseridos pelo terminal, e as inserções e edições realizadas ficam salvas em um banco de dados criado em SQLite.
+
+Devido à urgência do trabalho e o curto prazo para solucionar o problema, foi implementada uma solução mais simples se comparada aos planos iniciais, mas que contempla:
+Hierarquia;
+Polimorfismo;
+Interfaces;
+Além de conexão com o banco.
 
 # Rodando o código
 
